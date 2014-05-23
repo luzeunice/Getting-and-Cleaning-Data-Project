@@ -2,6 +2,10 @@
 # Getting and Cleaning Data - Project
 # Author: LEAO
 #######################################################################
+library(data.table)
+library(reshape)
+
+
 
 # Variables 
 filedown<-"data.zip"
@@ -75,7 +79,7 @@ dataSub<-rbind(subtrain,subtest)
 total<-cbind(dataX,dataSub,dataY)
 
 # Write the fist data set
-write.csv(total, dataSet1,sep="|")
+write.table(total, dataSet1,sep="|")
 
 #######################################################################
 #2.Extracts only the measurements on the mean and standard deviation for
@@ -98,6 +102,7 @@ colnames(totalMS) <- gsub('\\-',"",names(totalMS))
 #variable for each activity and each subject 
 #######################################################################
 # Transpose the mtotalMS data  set
+
 mtotalMS <- melt(totalMS, id=c('subject', 'desActivity'), measured = c("subject","desActivity"))
 #Calculate the the average of each variable for each activity and each subject
 dtotalMS<-dcast(mtotalMS, desActivity + subject ~ variable, mean)    
